@@ -1,0 +1,23 @@
+<div class="emails-container">
+  <h2>Gestionar Correos Electrónicos</h2>
+
+  <!-- Formulario para añadir un correo -->
+  <form (ngSubmit)="addEmail()" class="p-fluid">
+    <div class="p-field">
+      <label for="emailAddress">Correo Electrónico:</label>
+      <input id="emailAddress" type="email" pInputText [(ngModel)]="emailAddress" name="emailAddress" required>
+    </div>
+    <p-button label="Añadir Correo" icon="pi pi-plus" type="submit"></p-button>
+  </form>
+
+  <hr>
+
+  <!-- Lista de correos -->
+  <h3>Correos Existentes</h3>
+  <ul>
+    <li *ngFor="let email of emails; let i = index">
+      <strong>{{ email.address }}</strong>
+      <p-button label="Eliminar" icon="pi pi-trash" (click)="deleteEmail(email.id)" class="p-button-danger"></p-button>
+    </li>
+  </ul>
+</div>

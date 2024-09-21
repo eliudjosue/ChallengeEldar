@@ -1,0 +1,25 @@
+<p-card header="Login" class="login-card">
+    <form (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="username">Username</label>
+          <input pInputText id="username" type="text" [(ngModel)]="username" name="username" required />
+        </div>
+  
+        <div class="p-field">
+          <label for="password">Password</label>
+          <input pPassword id="password" [(ngModel)]="password" name="password" required />
+        </div>
+  
+        <div class="p-field">
+          <button pButton type="submit" label="Login" class="p-mt-3" [disabled]="!username || !password"></button>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="p-field">
+      <button (click)="ingresarConGoogle()" pButton type="submit" label="Login" class="p-mt-3"></button>
+    </div>
+  </p-card>
+  

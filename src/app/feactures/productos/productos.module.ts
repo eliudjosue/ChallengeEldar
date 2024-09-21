@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ProductosRoutingModule } from './productos-routing.module';
+import { ListadoComponent } from './Components/listado/listado.component';
+import { ProductosComponent } from './Components/productos/productos.component';
+import { AgregarComponent } from './Components/agregar/agregar.component';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+
+
+@NgModule({
+  declarations: [
+    ListadoComponent,
+    ProductosComponent,
+    AgregarComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ProductosRoutingModule,
+    InputTextModule,
+    ButtonModule,    
+  ]
+})
+export class ProductosModule { }
