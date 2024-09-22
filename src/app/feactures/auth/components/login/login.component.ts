@@ -11,7 +11,7 @@ export class LoginComponent {
  
   username: string = '';
   password: string = '';
-
+  
   usuario = {
     email: this.username,
    password: this.password
@@ -21,19 +21,16 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router) { }
-  // Este método se llamará cuando se haga submit al formulario
   onSubmit() {
     if (this.username && this.password) {
       this.Ingresar(this.username, this.password) 
     } else {
-      // Puedes mostrar un mensaje de error o validación
       console.error('Username and password are required');
     }
   }
 
   Ingresar(email: string , password: string ) {
     this.authService.login(email, password).then(res => {
-      console.log("Ingreso :", res);
       if (res?.operationType == 'signIn') {
         this.router.navigate(['/productos']);
       }
@@ -48,5 +45,12 @@ export class LoginComponent {
     this.authService.loginWithGoogle(email, password).then(res => {
       this.router.navigate(['/productos']);
     })
+  }
+
+  goToForgotPassword() {
+    this.router.navigate(['/auth/forgot']);
+  }
+  goToCreateAccount() {
+    this.router.navigate(['/auth/registro']);
   }
 }

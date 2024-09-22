@@ -1,13 +1,22 @@
-.register-card {
-    width: 400px;
-    margin: 100px auto;
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Para centrar verticalmente */
+  padding: 1rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 350px; /* Limitar el tamaño para que sea más pequeño */
+  margin: 0 auto;
+  padding: 2rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Opcional: sombra para darle un mejor aspecto */
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 1rem;
+    max-width: 300px; /* Ajusta el tamaño en pantallas pequeñas */
   }
-  
-  .p-field {
-    margin-bottom: 1rem;
-  }
-  
-  button {
-    width: 100%;
-  }
-  
+}

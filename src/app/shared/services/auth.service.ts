@@ -63,4 +63,8 @@ export class AuthService {
   stateAuth() {
     return this.afauth.authState
   }
+
+  // isLoget(){
+  //   return
+  // }
 }

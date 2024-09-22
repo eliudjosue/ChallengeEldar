@@ -1,4 +1,4 @@
-.login-card {
+/* .login-card {
     width: 400px;
     margin: 100px auto;
   }
@@ -10,4 +10,12 @@
   button {
     width: 100%;
   }
+
   
+   */
+
+   .lala {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }

@@ -1,25 +1,33 @@
-<p-card header="Login" class="login-card">
-    <form (ngSubmit)="onSubmit()">
-      <div class="p-fluid">
-        <div class="p-field">
-          <label for="username">Username</label>
-          <input pInputText id="username" type="text" [(ngModel)]="username" name="username" required />
-        </div>
-  
-        <div class="p-field">
-          <label for="password">Password</label>
-          <input pPassword id="password" [(ngModel)]="password" name="password" required />
-        </div>
-  
-        <div class="p-field">
-          <button pButton type="submit" label="Login" class="p-mt-3" [disabled]="!username || !password"></button>
-        </div>
+<div class="login-container">
+<div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+  <div class="text-center mb-5">
+      <div class="text-900 text-3xl font-medium mb-3">Welcome To Challege ELDAR</div>
+      <span class="text-600 c">Don't have an account?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="goToCreateAccount()">Create today!</a>
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+      <label for="username" class="block text-900 font-medium mb-2">Email</label>
+      <input  id="username" type="text" [(ngModel)]="username" name="username" placeholder="Email address" pInputText class="w-full mb-3">
+
+      <label for="password" class="block text-900 font-medium mb-2">Password</label>
+      <input id="password" [(ngModel)]="password" name="password" type="password" placeholder="Password" pInputText class="w-full mb-3">
+
+      <div class="flex align-items-center justify-content-between mb-6">
+          <div class="flex align-items-center">
+              <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+              <label for="rememberme1" class="text-900">Remember me</label>
+          </div>
+          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" (click)="goToForgotPassword()">Forgot password?</a>
       </div>
+      <div class="flex justify-content-center flex-wrap">
+        <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full mb-6"></button>
+      </div>
+      <div class="flex justify-content-center flex-wrap">
+        <button pButton pRipple label="Sign In" icon="pi pi-google" class="w-6" label="Sign in with Google" (click)="ingresarConGoogle()"></button>
+      </div>
+     
+
     </form>
-
-
-    <div class="p-field">
-      <button (click)="ingresarConGoogle()" pButton type="submit" label="Login" class="p-mt-3"></button>
-    </div>
-  </p-card>
-  
+</div>
+</div>

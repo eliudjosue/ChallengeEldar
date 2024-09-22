@@ -8,6 +8,7 @@ import { AgregarComponent } from './Components/agregar/agregar.component';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     ProductosRoutingModule,
     InputTextModule,
-    ButtonModule,    
+    ButtonModule,   
+    CardModule 
   ]
 })
 export class ProductosModule { }
