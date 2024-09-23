@@ -7,12 +7,13 @@ import { ForgotComponent } from './components/forgot/forgot.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     ButtonModule,
     CardModule,
     FormsModule,
-    CheckboxModule 
+    CheckboxModule,
+    ReactiveFormsModule,
+    ToastModule 
   ],
 })
 export class AuthModule {}

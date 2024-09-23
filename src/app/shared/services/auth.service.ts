@@ -2,14 +2,19 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
+import { map, Observable } from 'rxjs';
+import { EmailsService } from './emails.service';
+import { getAuth } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private permisos: boolean = false;
   constructor(
     private afauth: AngularFireAuth,
-    public database: AngularFirestore
+    public database: AngularFirestore,
+    public emailsService: EmailsService
   ) {
     this.getUid();
   }
@@ -64,7 +69,19 @@ export class AuthService {
     return this.afauth.authState
   }
 
-  // isLoget(){
-  //   return
+  checkUserRole(): Observable<boolean> {
+    const auth = getAuth();
+    const emailToCheck = auth.currentUser?.email;
+    console.log(auth.currentUser,"serviceeee")
+    return this.emailsService.getEmails().pipe(
+      map((roles) => {
+        this.permisos = roles.some((item) => item.address === emailToCheck);
+        return this.permisos;
+      })
+    );
+  }
+
+  // userHasPermission(): boolean {
+  //   return this.permisos;
   // }
 }

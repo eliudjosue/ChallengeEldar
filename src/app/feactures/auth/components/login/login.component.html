@@ -1,33 +1,59 @@
 <div class="login-container">
-<div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-  <div class="text-center mb-5">
+  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="text-center mb-5">
       <div class="text-900 text-3xl font-medium mb-3">Welcome To Challege ELDAR</div>
       <span class="text-600 c">Don't have an account?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="goToCreateAccount()">Create today!</a>
-  </div>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="goToCreateAccount()">Create
+        today!</a>
+    </div>
 
-  <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="contactForm">
       <label for="username" class="block text-900 font-medium mb-2">Email</label>
-      <input  id="username" type="text" [(ngModel)]="username" name="username" placeholder="Email address" pInputText class="w-full mb-3">
+      <input id="username" type="text" [(ngModel)]="username" name="username" placeholder="Email address" pInputText
+        class="w-full mb-3" formControlName="username">
+      <div *ngIf="contactForm.get('username')?.touched && contactForm.get('username')?.errors?.['required']"
+        class="text-red-500 mb-2s">This field is required.</div>
+      <div *ngIf="contactForm.get('username')?.touched && contactForm.get('username')?.errors?.['email']"
+        class="text-red-500 mb-2s">Please enter a valid email address.</div>
+      <div *ngIf="contactForm.get('username')?.touched && contactForm.get('username')?.errors?.['minlength']"
+        class="text-red-500 mb-2s">Email must be at least
+        {{contactForm.get('username')?.errors?.['minlength']?.requiredLength}} characters long.</div>
+      <div *ngIf="contactForm.get('username')?.touched && contactForm.get('username')?.errors?.['maxlength']"
+        class="text-red-500 mb-2s">Email cannot exceed
+        {{contactForm.get('username')?.errors?.['maxlength']?.requiredLength}} characters.</div>
 
       <label for="password" class="block text-900 font-medium mb-2">Password</label>
-      <input id="password" [(ngModel)]="password" name="password" type="password" placeholder="Password" pInputText class="w-full mb-3">
+      <input id="password" [(ngModel)]="password" name="password" type="password" placeholder="Password" pInputText
+        class="w-full mb-3" formControlName="password">
+      <div *ngIf="contactForm.get('password')?.touched && contactForm.get('password')?.errors?.['required']"
+        class="text-red-500 mb-2">This field is required.</div>
+      <div *ngIf="contactForm.get('password')?.touched && contactForm.get('password')?.errors?.['minlength']"
+        class="text-red-500 mb-2">Password must be at least 8 characters long.</div>
+      <div *ngIf="contactForm.get('password')?.touched && contactForm.get('password')?.errors?.['maxlength']"
+        class="text-red-500 mb-2">Password cannot exceed 20 characters.</div>
+      <div *ngIf="contactForm.get('password')?.touched && contactForm.get('password')?.errors?.['pattern']"
+        class="text-red-500 mb-2">Password must contain at least one uppercase letter, one lowercase letter, one number,
+        and
+        one special character.</div>
+
 
       <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-              <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-              <label for="rememberme1" class="text-900">Remember me</label>
-          </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer" (click)="goToForgotPassword()">Forgot password?</a>
+        <div class="flex align-items-center">
+          <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+          <label for="rememberme1" class="text-900">Remember me</label>
+        </div>
+        <!-- <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
+          (click)="goToForgotPassword()">Forgot password?</a> -->
       </div>
       <div class="flex justify-content-center flex-wrap">
         <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full mb-6"></button>
       </div>
       <div class="flex justify-content-center flex-wrap">
-        <button pButton pRipple label="Sign In" icon="pi pi-google" class="w-6" label="Sign in with Google" (click)="ingresarConGoogle()"></button>
+        <button pButton pRipple label="Sign In" icon="pi pi-google" class="w-6" label="Sign in with Google"
+          (click)="ingresarConGoogle()"></button>
       </div>
-     
+
 
     </form>
-</div>
+  </div>
 </div>

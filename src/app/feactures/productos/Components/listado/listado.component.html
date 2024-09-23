@@ -1,22 +1,27 @@
 <div *ngIf="photos.length">
-    <h1>Posts:</h1>
-    <ul class="card-grid">
-      <li *ngFor="let post of photos">
-        <div class="card flex justify-content-center">
-          <p-card [header]="post.title" [subheader]="post.thumbnailUrl" [style]="{ width: '360px' }">
-            <ng-template pTemplate="header">
-              <img alt="Card" [src]="post.url" />
-            </ng-template>
-            <p></p>
-            <!-- <ng-template pTemplate="footer">
-              <div class="flex gap-3 mt-1">
-                <p-button label="Cancel" severity="secondary" class="w-full" styleClass="w-full"></p-button>
-                <p-button label="Save" class="w-full" styleClass="w-full"></p-button>
-              </div>
-            </ng-template> -->
-          </p-card>
-        </div>
-      </li>
-    </ul>
+  <h1>Posts:</h1>
+  <ul class="card-grid">
+    <li *ngFor="let post of paginatedPhotos">
+      <div class="card flex justify-content-center">
+        <p-card [header]="post.title" [subheader]="post.thumbnailUrl" [style]="{ width: '360px' }">
+          <ng-template pTemplate="header">
+            <img alt="Card" [src]="post.url" />
+          </ng-template>
+          <p></p>
+        </p-card>
+      </div>
+    </li>
+  </ul>
+
+  <div class="flex justify-content-center w-full mt-6">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="photos.length"
+      [showCurrentPageReport]="true"
+      [showPageLinks]="false"
+      [showJumpToPageDropdown]="false"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" />
   </div>
-  
+</div>

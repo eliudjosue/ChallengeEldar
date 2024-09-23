@@ -1,1 +1,69 @@
-<p>productos works!</p>
+<div class="photo-container flex justify-content-center">
+    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6 mt-6">
+      <h2 class="text-center">Gestión de Fotos</h2>
+  
+      <!-- Formulario para añadir nueva foto -->
+      <form (ngSubmit)="addPhoto()" class="p-fluid">
+        <label for="photoTitle" class="block text-900 font-medium mb-2">Título de la Foto:</label>
+        <input id="photoTitle" type="text" pInputText [(ngModel)]="newPhoto.title" name="photoTitle" placeholder="Título"
+          class="w-full mb-3" />
+  
+        <label for="photoUrl" class="block text-900 font-medium mb-2">URL de la Foto:</label>
+        <input id="photoUrl" type="text" pInputText [(ngModel)]="newPhoto.url" name="photoUrl" placeholder="URL"
+          class="w-full mb-3" />
+  
+        <div class="flex justify-content-center flex-wrap">
+          <button pButton pRipple label="Añadir Foto" icon="pi pi-plus" type="submit" class="w-full mb-6"></button>
+        </div>
+      </form>
+  
+      <hr />
+    </div>
+  </div>
+  
+  <!-- Sección de fotos existentes -->
+  <div class="photos-list-container mt-6 w-full">
+    <h3 class="text-center mb-4">Fotos Existentes</h3>
+    <div class="grid">
+      <div *ngFor="let photo of paginatedPhotos; let i = index" class="col-12 md:col-4 lg:col-3 mb-4">
+        <div class="card">
+          <img [src]="photo.thumbnailUrl" alt="{{ photo.title }}" class="w-full mb-3" />
+          <strong>{{ photo.title }}</strong>
+          <div class="flex justify-content-center mt-2">
+            <button pButton icon="pi pi-trash" label="Eliminar" (click)="deletePhoto(photo.id)" severity="danger"
+              class="mr-2" size="small"></button>
+            <button pButton icon="pi pi-pencil" label="Editar" (click)="selectPhotoToEdit(photo)"
+              class="p-button-secondary" size="small"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Paginación -->
+    <div class="flex justify-content-center mt-4">
+      <p-paginator [rows]="rowsPerPage" [totalRecords]="totalRecords" (onPageChange)="paginate($event)">
+      </p-paginator>
+    </div>
+  </div>
+  
+  <!-- Modal para editar foto -->
+  <div *ngIf="editPhoto" class="modal-container">
+    <div class="surface-card p-4 shadow-2 border-round modal-content">
+      <h3>Editar Foto</h3>
+  
+      <label for="editPhotoTitle">Título:</label>
+      <input id="editPhotoTitle" type="text" pInputText [(ngModel)]="editPhoto.title" class="w-full mb-3" />
+  
+      <label for="editPhotoUrl">URL:</label>
+      <input id="editPhotoUrl" type="text" pInputText [(ngModel)]="editPhoto.url" class="w-full mb-3" />
+  
+      <div class="flex justify-content-end mt-3">
+        <button pButton label="Guardar" icon="pi pi-check" (click)="updatePhoto(editPhoto.id)" class="mr-2"
+          size="small"></button>
+        <button pButton label="Cancelar" icon="pi pi-times" (click)="editPhoto = null" class="p-button-secondary"></button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="editPhoto" class="modal-backdrop"></div>
+  

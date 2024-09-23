@@ -21,4 +21,9 @@ export class EmailsService {
   deleteEmail(id: string): Promise<void> {
     return this.firestore.collection('emails').doc(id).delete();
   }
+
+  updateEmail(id: string, newAddress: string): Promise<void> {
+    return this.firestore.collection('emails').doc(id).update({ address: newAddress });
+  }
+
 }

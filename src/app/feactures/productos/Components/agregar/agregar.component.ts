@@ -45,4 +45,17 @@ export class AgregarComponent {
     this.selectedEmail = { ...email };
     this.displayEditDialog = true;
   }
+
+  updateEmail(): void {
+    if (this.selectedEmail && this.selectedEmail.id && this.selectedEmail.address) {
+      this.emailsService
+        .updateEmail(this.selectedEmail.id, this.selectedEmail.address)
+        .then(() => {
+          console.log('Email actualizado exitosamente');
+          this.displayEditDialog = false; 
+          this.selectedEmail = {}; 
+        })
+        .catch((error) => console.error('Error al actualizar email:', error));
+    }
+  }
 }

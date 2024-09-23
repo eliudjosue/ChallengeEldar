@@ -9,21 +9,19 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
-  declarations: [
-    ListadoComponent,
-    ProductosComponent,
-    AgregarComponent
-  ],
+  declarations: [ListadoComponent, ProductosComponent, AgregarComponent],
   imports: [
     CommonModule,
     FormsModule,
     ProductosRoutingModule,
     InputTextModule,
-    ButtonModule,   
-    CardModule 
-  ]
+    ButtonModule,
+    CardModule,
+    PaginatorModule,
+  ],
 })
-export class ProductosModule { }
+export class ProductosModule {}
