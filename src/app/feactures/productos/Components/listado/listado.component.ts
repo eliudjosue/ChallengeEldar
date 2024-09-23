@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Photos,
-  ProductService,
-} from 'src/app/shared/services/product.service';
+import { Post, ProductService } from 'src/app/shared/services/product.service';
 
 @Component({
   selector: 'app-listado',
@@ -10,18 +7,19 @@ import {
   styleUrls: ['./listado.component.css'],
 })
 export class ListadoComponent implements OnInit {
-  photos: Photos[] = [];
-  paginatedPhotos: Photos[] = [];
+  posts: Post[] = []; // Cambiar de Photos[] a Post[]
+  paginatedPosts: Post[] = []; // Igual para los paginados
   first: number = 0;
   rows: number = 6;
 
-  constructor(private productService: ProductService) {}
+  constructor(private postService: ProductService) {} // Usar PostService
 
   ngOnInit() {
-    this.productService.getPosts().subscribe(
-      (data: Photos[]) => {
-        this.photos = data;
-        this.updatePaginatedPhotos();
+    // Usar el método getPosts() del nuevo servicio
+    this.postService.getPosts().subscribe(
+      (data: Post[]) => {
+        this.posts = data;
+        this.updatePaginatedPosts(); // Actualizar posts paginados
       },
       (error) => {
         console.error('Error fetching posts:', error);
@@ -29,16 +27,15 @@ export class ListadoComponent implements OnInit {
     );
   }
 
-  updatePaginatedPhotos(): void {
-    this.paginatedPhotos = this.photos.slice(
-      this.first,
-      this.first + this.rows
-    );
+  // Actualizar método de paginación
+  updatePaginatedPosts(): void {
+    this.paginatedPosts = this.posts.slice(this.first, this.first + this.rows);
   }
 
+  // Método para manejar el cambio de página
   onPageChange(event: any): void {
     this.first = event.first;
     this.rows = event.rows;
-    this.updatePaginatedPhotos();
+    this.updatePaginatedPosts();
   }
 }

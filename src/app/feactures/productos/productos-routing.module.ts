@@ -17,10 +17,9 @@ const routes: Routes = [
       {
         path: 'productos',
         component: ProductosComponent,
-        canActivate: [RoleGuard],
       },
       { path: 'listado', component: ListadoComponent },
-      { path: '**', redirectTo: 'listado' },
+      { path: '**', redirectTo: 'productos' },
     ],
   },
 ];

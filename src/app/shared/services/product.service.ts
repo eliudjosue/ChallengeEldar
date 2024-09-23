@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Photos {
@@ -10,40 +10,48 @@ export interface Photos {
   title: string;
 }
 
+export interface Post {
+  id?: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
+  // private apiUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
   private postsUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener los posts
-  getPosts(): Observable<Photos[]> {
-    return this.http.get<Photos[]>(this.apiUrl);
+  // Listar todos los posts
+  getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(this.apiUrl);
   }
 
-  // Método para crear un post
-  createPost(post: Photos): Observable<Photos> {
-    return this.http.post<Photos>(this.postsUrl, post);
+  // Obtener un solo post por ID
+  getPost(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
 
-  // Método para actualizar un post por ID
-  updatePost(id: number, post: Photos): Observable<Photos> {
-    const url = `${this.postsUrl}/${id}`;
-    return this.http.put<Photos>(url, post);
+  // Crear un nuevo post
+  createPost(post: Post): Observable<Post> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Post>(this.apiUrl, post, { headers });
   }
 
-  // Método para obtener un solo post por ID
-  getPostById(id: number): Observable<Photos> {
-    const url = `${this.postsUrl}/${id}`;
-    return this.http.get<Photos>(url);
+  // Actualizar un post existente
+  updatePost(post: Post): Observable<Post> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<Post>(`${this.apiUrl}/${post.id}`, post, { headers });
   }
 
-  // Método para eliminar un post por ID
+  // Eliminar un post
   deletePost(id: number): Observable<void> {
-    const url = `${this.postsUrl}/${id}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

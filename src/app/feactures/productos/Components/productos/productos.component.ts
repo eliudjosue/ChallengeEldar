@@ -1,138 +1,117 @@
-import { Component } from '@angular/core';
-import { Photos, ProductService } from 'src/app/shared/services/product.service';
+import { Component, OnInit } from '@angular/core';
+import { GuardService } from 'src/app/shared/services/guard.service';
+import { Post, ProductService } from 'src/app/shared/services/product.service';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent {
-  photos: Photos[] = [];
-  selectedPhoto: Photos | null = null;
-  newPhoto: Photos = {
-    albumId: 1,
-    id: 0,
-    url: '',
-    thumbnailUrl: '',
-    title: ''
+export class ProductosComponent implements OnInit {
+  posts: Post[] = [];
+  selectedPost: Post | null = null;
+  newPost: Post = {
+    userId: 1,
+    title: '',
+    body: ''
   };
-  editPhoto: Photos | null = null;
+  editPost: Post | null = null;
 
-  constructor(private productService: ProductService) {}
+  paginatedPosts: Post[] = [];
+  totalRecords: number = 0;
+  rowsPerPage: number = 8; // Número de posts por página
+  guardStatusRole: boolean = true;
+
+  constructor(private postService: ProductService,private guardService: GuardService) {}
 
   ngOnInit(): void {
-    this.getPhotos();
-    this.loadPhotos();
-  }
-
-
-
-
-
-  paginatedPhotos: Photos[] = [];
-  totalRecords: number = 0;
-  rowsPerPage: number = 8; // Número de fotos por página
-
-  // newPhoto: Photos = { id: 0, albumId: 1, title: '', url: '', thumbnailUrl: '' };
- 
-
-  // constructor(private productService: ProductService) {}
-
-  // ngOnInit(): void {
-  //   this.loadPhotos();
-  // }
-
-  loadPhotos(): void {
-    this.productService.getPosts().subscribe((data: Photos[]) => {
-      this.photos = data;
-      this.totalRecords = this.photos.length;
-      this.paginate({ first: 0, rows: this.rowsPerPage }); // Mostrar la primera página al inicio
+    this.guardService.guardStatusRole$.subscribe((status: boolean) => {
+      this.guardStatusRole = status;
     });
+    this.loadPosts();
   }
 
+ // Cargar todos los posts
+loadPosts(): void {
+  this.postService.getPosts().subscribe((data: Post[]) => {
+    this.posts = data.reverse(); // Invertir el orden de los posts
+    this.totalRecords = this.posts.length;
+    this.paginate({ first: 0, rows: this.rowsPerPage }); // Mostrar la primera página al inicio
+  });
+}
+
+
+  // Paginación de posts
   paginate(event: any): void {
     const start = event.first;
     const end = start + event.rows;
-    this.paginatedPhotos = this.photos.slice(start, end);
+    this.paginatedPosts = this.posts.slice(start, end);
   }
 
+// Crear un nuevo post
+addPost(): void {
+  this.postService.createPost(this.newPost).subscribe(
+    (data) => {
+      this.posts.unshift(data); // Agregar el nuevo post al inicio del array
+      this.newPost = { userId: 1, title: '', body: '' }; // Resetear el formulario
+      this.totalRecords = this.posts.length; // Actualiza el total de registros
+      this.paginate({ first: 0, rows: this.rowsPerPage }); // Actualiza la paginación
+    },
+    (error) => {
+      console.error('Error al crear el post', error);
+    }
+  );
+}
 
 
-
-
-
-
-
-
-  // Obtener todos los posts (fotos)
-  getPhotos(): void {
-    this.productService.getPosts().subscribe(
-      (data) => {
-        this.photos = data;
-      },
-      (error) => {
-        console.error('Error al obtener las fotos', error);
-      }
-    );
-  }
-
-  // Crear un nuevo post (foto)
-  addPhoto(): void {
-    this.productService.createPost(this.newPhoto).subscribe(
-      (data) => {
-        this.photos.push(data); // Agrega la nueva foto al array
-        this.newPhoto = { albumId: 1, id: 0, url: '', thumbnailUrl: '', title: '' }; // Resetear el formulario
-      },
-      (error) => {
-        console.error('Error al crear la foto', error);
-      }
-    );
-  }
-
-  // Actualizar un post (foto) existente
-  updatePhoto(id: number): void {
-    if (this.editPhoto) {
-      this.productService.updatePost(id, this.editPhoto).subscribe(
+  // Actualizar un post existente
+  updatePost(): void {
+    if (this.editPost) {
+      this.postService.updatePost(this.editPost).subscribe(
         (data) => {
-          const index = this.photos.findIndex(p => p.id === id);
+          const index = this.posts.findIndex(p => p.id === data.id);
           if (index > -1) {
-            this.photos[index] = data; // Actualiza la foto en el array
+            this.posts[index] = data; // Actualizar el post en el array
+            this.totalRecords = this.posts.length; // Actualiza el total de registros
+            this.paginate({ first: 0, rows: this.rowsPerPage }); // Actualiza la paginación
           }
-          this.editPhoto = null; // Limpiar el formulario de edición
+          this.editPost = null; // Limpiar el formulario de edición
         },
         (error) => {
-          console.error('Error al actualizar la foto', error);
+          console.error('Error al actualizar el post', error);
         }
       );
     }
   }
 
-  // Obtener un post (foto) por ID
-  getPhotoById(id: number): void {
-    this.productService.getPostById(id).subscribe(
+  // Obtener un post por ID
+  getPostById(id: number): void {
+    this.postService.getPost(id).subscribe(
       (data) => {
-        this.selectedPhoto = data; // Muestra los detalles de la foto seleccionada
+        this.selectedPost = data; // Mostrar los detalles del post seleccionado
       },
       (error) => {
-        console.error('Error al obtener la foto por ID', error);
+        console.error('Error al obtener el post por ID', error);
       }
     );
   }
 
-  // Eliminar un post (foto) por ID
-  deletePhoto(id: number): void {
-    this.productService.deletePost(id).subscribe(
+  // Eliminar un post por ID
+  deletePost(id: any): void {
+    this.postService.deletePost(id).subscribe(
       () => {
-        this.photos = this.photos.filter(p => p.id !== id); // Eliminar la foto del array
+        this.posts = this.posts.filter(p => p.id !== id); // Eliminar el post del array
+        this.totalRecords = this.posts.length; // Actualiza el total de registros
+        this.paginate({ first: 0, rows: this.rowsPerPage }); // Actualiza la paginación
       },
       (error) => {
-        console.error('Error al eliminar la foto', error);
+        console.error('Error al eliminar el post', error);
       }
     );
   }
 
-  // Seleccionar una foto para editar
-  selectPhotoToEdit(photo: Photos): void {
-    this.editPhoto = { ...photo }; // Clona la foto seleccionada para edición
+  // Seleccionar un post para editar
+  selectPostToEdit(post: Post): void {
+    this.editPost = { ...post }; // Clonar el post seleccionado para edición
   }
 }

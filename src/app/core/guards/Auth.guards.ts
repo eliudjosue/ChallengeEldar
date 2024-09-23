@@ -34,6 +34,7 @@ export const RoleGuard = () => {
     emailsService.getEmails().subscribe((rol) => {
       permisos = rol.some(item => item.address === emailToCheck);
       if (permisos) {
+      guardService.updateGuardStatusRole(true);
         resolve(true);
       } else {
         router.navigate(['/productos']);

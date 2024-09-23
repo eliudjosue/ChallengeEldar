@@ -36,7 +36,7 @@ export class MunubarComponent implements OnInit {
       {
         label: 'Products',
         icon: 'pi pi-home',
-        routerLink: '/productos/listado',
+        routerLink: '/productos/productos',
       },
       {
         label: 'Admin',
