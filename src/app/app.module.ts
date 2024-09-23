@@ -11,21 +11,17 @@ import { MenubarModule } from 'primeng/menubar';
 import { environment } from 'src/enviroments/enviroments';
 import { MunubarComponent } from './shared/components/munubar/munubar.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    MunubarComponent
-  ],
+  declarations: [AppComponent, MunubarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     MenubarModule,
-    BadgeModule, 
-    HttpClientModule
+    BadgeModule,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

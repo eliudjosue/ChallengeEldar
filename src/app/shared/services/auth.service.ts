@@ -80,8 +80,4 @@ export class AuthService {
       })
     );
   }
-
-  // userHasPermission(): boolean {
-  //   return this.permisos;
-  // }
 }

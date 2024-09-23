@@ -31,31 +31,29 @@ export class ProductosComponent implements OnInit {
     this.loadPosts();
   }
 
- // Cargar todos los posts
 loadPosts(): void {
   this.postService.getPosts().subscribe((data: Post[]) => {
-    this.posts = data.reverse(); // Invertir el orden de los posts
+    this.posts = data.reverse(); 
     this.totalRecords = this.posts.length;
-    this.paginate({ first: 0, rows: this.rowsPerPage }); // Mostrar la primera página al inicio
+    this.paginate({ first: 0, rows: this.rowsPerPage }); 
   });
 }
 
 
-  // Paginación de posts
+
   paginate(event: any): void {
     const start = event.first;
     const end = start + event.rows;
     this.paginatedPosts = this.posts.slice(start, end);
   }
 
-// Crear un nuevo post
 addPost(): void {
   this.postService.createPost(this.newPost).subscribe(
     (data) => {
-      this.posts.unshift(data); // Agregar el nuevo post al inicio del array
-      this.newPost = { userId: 1, title: '', body: '' }; // Resetear el formulario
-      this.totalRecords = this.posts.length; // Actualiza el total de registros
-      this.paginate({ first: 0, rows: this.rowsPerPage }); // Actualiza la paginación
+      this.posts.unshift(data); 
+      this.newPost = { userId: 1, title: '', body: '' }; 
+      this.totalRecords = this.posts.length; 
+      this.paginate({ first: 0, rows: this.rowsPerPage }); 
     },
     (error) => {
       console.error('Error al crear el post', error);
@@ -64,18 +62,17 @@ addPost(): void {
 }
 
 
-  // Actualizar un post existente
   updatePost(): void {
     if (this.editPost) {
       this.postService.updatePost(this.editPost).subscribe(
         (data) => {
           const index = this.posts.findIndex(p => p.id === data.id);
           if (index > -1) {
-            this.posts[index] = data; // Actualizar el post en el array
-            this.totalRecords = this.posts.length; // Actualiza el total de registros
-            this.paginate({ first: 0, rows: this.rowsPerPage }); // Actualiza la paginación
+            this.posts[index] = data; 
+            this.totalRecords = this.posts.length; 
+            this.paginate({ first: 0, rows: this.rowsPerPage }); 
           }
-          this.editPost = null; // Limpiar el formulario de edición
+          this.editPost = null; 
         },
         (error) => {
           console.error('Error al actualizar el post', error);
@@ -84,11 +81,10 @@ addPost(): void {
     }
   }
 
-  // Obtener un post por ID
   getPostById(id: number): void {
     this.postService.getPost(id).subscribe(
       (data) => {
-        this.selectedPost = data; // Mostrar los detalles del post seleccionado
+        this.selectedPost = data; 
       },
       (error) => {
         console.error('Error al obtener el post por ID', error);

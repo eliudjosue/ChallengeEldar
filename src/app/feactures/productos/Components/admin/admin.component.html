@@ -21,8 +21,10 @@
           <strong>{{ email.address }}</strong>
         </div>
         <div class="col card flex justify-content-center">
-          <button pButton icon="pi pi-trash" label="Eliminar" (click)="deleteEmail(email.id)" severity="danger" class="mr-2" size="small"></button>
-          <button pButton icon="pi pi-pencil" label="Editar" (click)="showEditDialog(email)" class="p-button-secondary" size="small"></button>
+          <button pButton icon="pi pi-trash" label="Eliminar" (click)="deleteEmail(email.id)" severity="danger"
+            class="mr-2" size="small"></button>
+          <button pButton icon="pi pi-pencil" label="Editar" (click)="showEditDialog(email)" class="p-button-secondary"
+            size="small"></button>
         </div>
       </li>
     </ul>
@@ -36,7 +38,8 @@
 
         <div class="flex justify-content-end mt-3">
           <button pButton label="Guardar" icon="pi pi-check" (click)="updateEmail()" class="mr-2" size="small"></button>
-          <button pButton label="Cancelar" icon="pi pi-times" (click)="displayEditDialog = false" class="p-button-secondary"></button>
+          <button pButton label="Cancelar" icon="pi pi-times" (click)="displayEditDialog = false"
+            class="p-button-secondary"></button>
         </div>
       </div>
     </div>
